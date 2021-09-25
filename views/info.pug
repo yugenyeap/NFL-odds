@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Boxer Information
+    link(rel='stylesheet', href='stylesheets/bootstrap.min.css')
+  body
+    h1.display-3 #{info.name}
+      h2.lead Nickname: #{info.alias}
+        h2.lead Born: #{info.born}
+          h2.lead Nationality: #{info.nationality}
+            h2.lead Ranked number: #{info.ranking[0][0]}
+                h2.lead Weight division: #{info.division}
+                  h2.lead Debut: #{info.debut}
+                    h2.lead Total fights: #{info.numberOfBouts}
+                      h2.lead Rounds fought: #{info.rounds}
+                        h2.lead Opponents knocked out: #{info.KOs}
+                          h2.lead Height: #{info.height}
+                            h2.lead Reach: #{info.reach}
+                              h2.lead Stance: #{info.stance}
+  a(class='btn btn-primary btn-lg', href='/') Back to Homepage

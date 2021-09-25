@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title Boxing Odds
+    link(rel='stylesheet', href='stylesheets/bootstrap.min.css')
+  body
+    .container
+      header.jumbotron.my-4
+        h1.display-3 NFL odds from all Aussie bookmakers
+        p.lead Below are the list of upcoming NFL matches. Each table contains the teams start time, odds and bookmakers
+      .row.text-center
+        each event, index in events
+          .col-lg.col-lg-12.mb-4
+            .card-body
+              h2.card #{events[index][0]} vs #{events[index][1]}
+                h3.card Match Date: #{events[index][2]}
+                  table.table-bordered
+                    thead
+                      tr(style='width:100%', border='1')
+                        th.cardtext Site
+                        th.cardtext #{events[index][0]}
+                        th.cardtext #{events[index][1]}
+                        th.cardtext Last Updated
+                    tbody
+                    each site, index1 in events[index][3]
+                      tr
+                        th.cardtext #{events[index][3][index1][0]}
+                        td.cardtext #{events[index][3][index1][1]}
+                        td.cardtext #{events[index][3][index1][2]}
+                        td.cardtext #{events[index][3][index1][3]}
