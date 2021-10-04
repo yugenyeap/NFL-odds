@@ -13,6 +13,45 @@ const baseURL = 'https://api.the-odds-api.com/v3/odds?'
 //const apikey = 'apiKey=' + API_key
 //const sport = '&sport=americanfootball_nfl'
 
+
+//function to get max index from array
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
+
+//function to get min index from array
+function indexOfMin(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] < max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
+
 //Can replace with these:
 //mma_mixed_martial_arts
 //americanfootball_ncaaf
@@ -51,7 +90,7 @@ async function retrieveEventDetails() {
                 var sites_no = response.data.data[i].sites_count
                 console.log(sites_no + " current sites available")
 
-                events[i] = new Array(4)
+                events[i] = new Array(5)
                 events[i][0] = response.data.data[i].teams[0] // Home team
                 events[i][1] = response.data.data[i].teams[1] // Away team
 
@@ -71,7 +110,7 @@ async function retrieveEventDetails() {
                     console.log(response.data.data[i].sites[j].site_nice)
                     console.log(response.data.data[i].sites[j].odds.h2h)
 
-                    events[i][3][j] = new Array(4)
+                    events[i][3][j] = new Array(8)
 
                     //Place Site and team data into array
 
@@ -87,7 +126,50 @@ async function retrieveEventDetails() {
                     var start_time = dateObjectStartTime.toLocaleString("en-AU")
 
                     events[i][3][j][3] = start_time //Last updated
+
+                    
                 }
+
+                //Defining highest and lowest odds offered
+                var home_team_odds = new Array(sites_no)
+                var away_team_odds = new Array(sites_no)
+
+                //Put odds into arrays
+                for (var k = 0; k < sites_no; k++) {
+
+
+                    //home team odds
+                    home_team_odds[k] = events[i][3][k][1]
+
+                    //away team odds
+                    away_team_odds[k] = events[i][3][k][2]
+
+                }
+    
+
+
+                var highest_home_odds_index = indexOfMax(home_team_odds)
+                var highest_away_odds_index = indexOfMax(away_team_odds)
+
+                var lowest_home_odds_index = indexOfMin(home_team_odds)
+                var lowest_away_odds_index = indexOfMin(away_team_odds)
+
+                // console.log(highest_home_odds_index)
+                // console.log(lowest_home_odds_index)
+
+                events[i][4] = new Array(4)
+
+                //1 = highest home team
+                events[i][4][0] = highest_home_odds_index
+
+                //2 = lowest home team
+                events[i][4][1] = lowest_home_odds_index
+
+                //3 = highest away team
+                events[i][4][2] = highest_away_odds_index
+
+                //4 = lowest away team
+                events[i][4][3] = lowest_away_odds_index
 
 
             }
