@@ -17,40 +17,42 @@ const baseURL = 'https://api.the-odds-api.com/v3/odds?'
 //function to get max index from array
 function indexOfMax(arr) {
     if (arr.length === 0) {
-        return -1;
+        return false;
     }
 
     var max = arr[0];
-    var maxIndex = 0;
 
     for (var i = 1; i < arr.length; i++) {
         if (arr[i] > max) {
-            maxIndex = i;
             max = arr[i];
         }
     }
 
-    return maxIndex;
+    return max;
 }
 
 //function to get min index from array
 function indexOfMin(arr) {
     if (arr.length === 0) {
-        return -1;
+        return false;
     }
 
-    var max = arr[0];
-    var maxIndex = 0;
+    var min = arr[0];
 
     for (var i = 1; i < arr.length; i++) {
-        if (arr[i] < max) {
-            maxIndex = i;
-            max = arr[i];
+        if (arr[i] < min) {
+            min = arr[i];
         }
     }
 
-    return maxIndex;
+    return min;
 }
+
+var highest_home_odds_index
+                var highest_away_odds_index
+
+                var lowest_home_odds_index
+                var lowest_away_odds_index
 
 //Can replace with these:
 //mma_mixed_martial_arts
@@ -172,8 +174,12 @@ async function retrieveEventDetails() {
                 events[i][4][3] = lowest_away_odds_index
 
 
+                console.log(highest_home_odds_index)
+                console.log(lowest_home_odds_index)
+                console.log(highest_away_odds_index)
+                console.log(lowest_away_odds_index)
             }
-            console.log()
+
 
             // Check your usage
             console.log()
@@ -193,7 +199,12 @@ async function retrieveEventDetails() {
 router.get('/', async function (req, res) {
     try {
         const events = await retrieveEventDetails()
-        res.render('index', { events });
+        res.render('index', { events,
+        highest_home: highest_home_odds_index,
+        lowest_home: lowest_home_odds_index,
+        highest_away: highest_away_odds_index,
+        lowest_away: lowest_away_odds_index,
+        });
         console.log('Rendered the home page')
     }
     catch (err) {
