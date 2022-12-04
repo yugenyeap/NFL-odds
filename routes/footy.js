@@ -68,7 +68,7 @@ async function retrieveEventDetails() {
         axios.get(baseURL, {
             params: {
                 api_key: API_key,
-                sport: "americanfootball_nfl",
+                sport: "aussierules_afl",
                 region: "au",
                 mkt: "h2h",
                 dateFormat: "unix"
